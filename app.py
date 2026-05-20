@@ -230,6 +230,7 @@ def order():
         total += item['total']
 
     fruit_types = len(member_cart)
+    carts[member_id] = []
 
     return jsonify({
         "success": True,
