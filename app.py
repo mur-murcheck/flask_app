@@ -5,6 +5,11 @@ import uuid
 app = Flask(__name__)
 
 
+@app.route("/healthCheck", methods=["GET"])
+def health_check():
+    return "I am healthy!"
+
+
 goods = {
     1: {"name": "apple", "price": 20},
     2: {"name": "banana", "price": 45},
