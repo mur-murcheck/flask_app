@@ -40,30 +40,37 @@ def show_goods():
 
     if request.method == "POST":
         inputData = request.json
-        key = inputData.get("key")
+#        key = inputData.get("key")
+        name = inputData.get("name")
 
         if not inputData:
             return jsonify(goods_list)
 
-        if not key:
-            return jsonify({
-                "success": False,
-                "message": "Keyword is required"
-            })
+#        if not key:
+#            return jsonify({
+#                "success": False,
+#                "message": "Keyword is required"
+#            })
         
         result = []
-        
+
         for item in goods_list:
-            if item["name"] == key:
+            if name in item["name"]:
                 result.append(item)
 
-        if not result:
-            return jsonify({
-                "success": False,
-                "message": "Product not found"
-            })
-
         return jsonify(result)
+        
+#        for item in goods_list:
+#            if item["name"] == key:
+#                result.append(item)
+#
+#        if not result:
+#            return jsonify({
+#                "success": False,
+#                "message": "Product not found"
+#            })
+#
+#        return jsonify(result)
 
     return jsonify(goods_list)
 
