@@ -33,7 +33,7 @@ def show_goods():
     for code in goods:
         item = goods[code]
         goods_list.append({
-            "id": code,
+            "product_id": code,
             "name": item["name"],
             "price": item["price"]
         })
