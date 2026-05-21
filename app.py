@@ -42,6 +42,9 @@ def show_goods():
         inputData = request.json
         key = inputData.get("key")
 
+        if not inputData:
+            return jsonify(goods_list)
+
         if not key:
             return jsonify({
                 "success": False,
