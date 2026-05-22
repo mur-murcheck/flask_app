@@ -271,7 +271,7 @@ def order():
         "message": "Order created successfully",
         "customer": member,
         "item": member_cart,
-        "total": total,
-        "fruitTypes": fruit_types,
+        "total_amount": total,
+        "total_categories": fruit_types,
         "member_id": member_id
     })
