@@ -115,7 +115,7 @@ def add_member():
     })
 
 
-@app.route('/members', methods=['GET'])
+@app.route('/showMembers', methods=['GET', 'POST'])
 def show_members():
     return jsonify(members)
 
