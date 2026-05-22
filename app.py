@@ -222,11 +222,14 @@ def buy():
     for item in member_cart:
         cart_total += item["total"]
 
+    total_categories = len(member_cart)
+
     return jsonify({
         "success": True,
         "message": "Product added to cart",
         "cart": member_cart,
-        "total_amount": cart_total
+        "total_amount": cart_total,
+        "total_categories": total_categories
     })
 
 
