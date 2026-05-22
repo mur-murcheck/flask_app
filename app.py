@@ -226,7 +226,7 @@ def buy():
         "success": True,
         "message": "Product added to cart",
         "cart": member_cart,
-        "cartTotal": cart_total
+        "total_amount": cart_total
     })
 
 
