@@ -41,18 +41,26 @@ def show_goods():
     if request.method == "POST":
         inputData = request.json
         name = inputData.get("name")
+        product_id = inputData.get("product_id")
 
         if not inputData:
             return jsonify(goods_list)
-
         
-        result = []
+        if name:
+            result = []
+            for item in goods_list:
+                if name in item["name"]:
+                    result.append(item)
 
-        for item in goods_list:
-            if name in item["name"]:
-                result.append(item)
+            return jsonify(result)
 
-        return jsonify(result)
+        if product_id:
+            result = []
+            for item in goods_list:
+                if item["product_id"] == product_id:
+                    result.append(item)
+
+            return jsonify(result)
 
     return jsonify(goods_list)
 
