@@ -121,6 +121,7 @@ def show_members():
     if request.method == 'POST':
         inputData = request.json
         name = inputData.get('name')
+        member_id = inputData.get('member_id')
 
         if not inputData:
             return jsonify(members)
@@ -134,6 +135,13 @@ def show_members():
                     result[member_id] = member
 
             return jsonify(result)
+        
+        if member_id:
+            if member_id in members:                    
+                return jsonify({
+                    member_id: members[member_id]
+                })
+            return jsonify({})
         
     return jsonify(members)
 
