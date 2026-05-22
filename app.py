@@ -117,12 +117,23 @@ def add_member():
 
 @app.route('/showMembers', methods=['GET', 'POST'])
 def show_members():
-    
+
     if request.method == 'POST':
         inputData = request.json
+        name = inputData.get('name')
 
         if not inputData:
             return jsonify(members)
+        
+        if name:
+            result = {}
+            for member_id in members:
+                member = members[member_id]
+
+                if name in member["name"]:
+                    result[member_id] = member
+
+            return jsonify(result)
         
     return jsonify(members)
 
