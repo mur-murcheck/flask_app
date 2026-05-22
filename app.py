@@ -30,10 +30,10 @@ def show_goods():
     
     goods_list = []
 
-    for code in goods:
-        item = goods[code]
+    for product_id in goods:
+        item = goods[product_id]
         goods_list.append({
-            "product_id": code,
+            "product_id": product_id,
             "name": item["name"],
             "price": item["price"]
         })
@@ -151,7 +151,7 @@ def buy():
     inputData = request.json
     print('input', inputData)
 
-    code = inputData.get('code')
+    product_id = inputData.get('product_id')
     quantity = inputData.get('quantity')
     member_id = inputData.get("member_id")
 
@@ -167,10 +167,10 @@ def buy():
             "message": "Member does not exist"
         })
 
-    if not code:
+    if not product_id:
         return jsonify({
             "success": False,
-            "message": "Product code is required"
+            "message": "Product ID is required"
         })
     
     if not quantity:
@@ -179,10 +179,10 @@ def buy():
             "message": "Quantity is required"
         })
 
-    code = int(code)
+    product_id = int(product_id)
     quantity = int(quantity)
 
-    if code not in goods:
+    if product_id not in goods:
         return jsonify({
             "success": False,
             "message": "Product does not exist"
@@ -194,7 +194,7 @@ def buy():
             "message": "Quantity must be greater than zero"
         })
     
-    item = goods[code]
+    item = goods[product_id]
     total = item["price"] * quantity
 
     found = False
@@ -202,7 +202,7 @@ def buy():
     member_cart = carts[member_id]
 
     for cart_item in member_cart:
-        if cart_item["code"] == code:
+        if cart_item["product_id"] == product_id:
             cart_item["quantity"] += quantity
             cart_item["total"] = cart_item["price"] * cart_item["quantity"]
             found = True
@@ -210,7 +210,7 @@ def buy():
 
     if not found:
         member_cart.append({
-            "code": code,
+            "product_id": product_id,
             "name": item["name"],
             "price": item["price"],
             "quantity": quantity,
