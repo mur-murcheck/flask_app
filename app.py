@@ -66,6 +66,12 @@ def show_goods():
         if price:
             result = []
             if price.startswith(">="):
+                if len(price) <= 2:
+                    return jsonify({
+                        "success": False,
+                        "message": "Price value is required"
+                    })
+                
                 bound = int(price[2:])
 
                 for item in goods_list:
@@ -75,6 +81,12 @@ def show_goods():
                 return jsonify(result)
 
             if price.startswith("<="):
+                if len(price) <= 2:
+                    return jsonify({
+                        "success": False,
+                        "message": "Price value is required"
+                    })
+                
                 bound = int(price[2:])
 
                 for item in goods_list:
@@ -82,6 +94,11 @@ def show_goods():
                         result.append(item)
 
                 return jsonify(result)
+            
+            return jsonify({
+                "success": False,
+                "message": "Price format must be >=value or <=value"
+            })
 
     return jsonify(goods_list)
 
