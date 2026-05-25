@@ -42,6 +42,7 @@ def show_goods():
         inputData = request.json
         name = inputData.get("name")
         product_id = inputData.get("product_id")
+        price = inputData.get("price")
 
         if not inputData:
             return jsonify(goods_list)
@@ -61,6 +62,26 @@ def show_goods():
                     result.append(item)
 
             return jsonify(result)
+        
+        if price:
+            result = []
+            if price.startswith(">="):
+                bound = int(price[2:])
+
+                for item in goods_list:
+                    if item["price"] >= bound:
+                        result.append(item)
+
+                return jsonify(result)
+
+            if price.startswith("<="):
+                bound = int(price[2:])
+
+                for item in goods_list:
+                    if item["price"] <= bound:
+                        result.append(item)
+
+                return jsonify(result)
 
     return jsonify(goods_list)
 
