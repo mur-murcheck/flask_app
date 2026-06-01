@@ -359,6 +359,46 @@ def buy():
     })
 
 
+@app.route('/showCart', methods=['POST'])
+def show_cart():
+    inputData = request.json
+    member_id = inputData.get("member_id")
+
+    if not member_id:
+        return jsonify({
+            "success": False,
+            "message": "Member ID is required"
+        })
+    
+    if not isinstance(member_id, str):
+        return jsonify({
+            "success": False,
+            "message": "Member ID must be string"
+        })
+    
+    if member_id not in members:
+        return jsonify({
+            "success": False,
+            "message": "Member does not exist"
+        })
+    
+    member_cart = carts[member_id]
+
+    total_amount = 0
+    for item in member_cart:
+        total_amount += item["total"]
+
+    total_categories = len(member_cart)
+
+    return jsonify({
+        "success": True,
+        "member_id": member_id,
+        "cart": member_cart,
+        "total amount": total_amount,
+        "total_categories": total_categories
+    })
+
+
 @app.route('/order', methods=['GET'])
 def order():
     member_id = request.args.get("member_id")
