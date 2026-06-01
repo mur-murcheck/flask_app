@@ -82,7 +82,7 @@ def show_goods():
                     "success": False,
                     "message": "Price format must be '>= value' or '<= value'"
                 })
-            
+
             split_data = price.split(" ", 2)
             if len(split_data) != 2:
                 return jsonify({
@@ -144,7 +144,7 @@ def add_member():
             "success": False,
             "message": "Name is required"
         })
-    
+
     if not isinstance(name, str):
         return jsonify({
             "success": False,
@@ -156,7 +156,7 @@ def add_member():
             "success": False,
             "message": "Phone is required"
         })
-    
+
     if not isinstance(phone, str):
         return jsonify({
             "success": False,
@@ -174,12 +174,32 @@ def add_member():
             "success": False,
             "message": "Address is required"
         })
-    
+
     if not isinstance(address, str):
         return jsonify({
             "success": False,
             "message": "Address must be string"
         })
+
+    # matched_key = f"{name}:{phone}"
+    for existing_member_id, data in members.items():
+        # cur_member = f"{data.get('name')}:{data.get('phone')}"
+
+        member = members[existing_member_id]
+        if member["name"] == name:
+        # if matched_key == cur_member:
+            return jsonify({
+                "success": False,
+                "member_id": existing_member_id,
+                "message": "Member already exists"
+            })
+        
+        if member["phone"] == phone:
+            return jsonify({
+                "success": False,
+                "member_id": existing_member_id,
+                "message": "Phone is used already"
+            })
 
     member_id = str(uuid.uuid4())
 
@@ -208,14 +228,26 @@ def show_members():
 
         if not inputData:
             return jsonify(members)
+        
+        if name is not None and not isinstance(name, str):
+            return jsonify({
+                "success": False,
+                "message": "Name must be string"
+            })
+        
+        if member_id is not None and not isinstance(member_id, str):
+            return jsonify({
+                "success": False,
+                "message": "Member ID must be string"
+            })
 
         if name:
-            if not isinstance(name, str):
-                return jsonify({
-                    "success": False,
-                    "message": "Name must be string"
-                })
-            
+            # if not isinstance(name, str):
+            #     return jsonify({
+            #         "success": False,
+            #         "message": "Name must be string"
+            #     })
+
             result = {}
             for member_id in members:
                 member = members[member_id]
@@ -226,12 +258,12 @@ def show_members():
             return jsonify(result)
 
         if member_id:
-            if not isinstance(member_id, str):
-                return jsonify({
-                    "success": False,
-                    "message": "Member ID must be string"
-                })
-            
+            # if not isinstance(member_id, str):
+            #     return jsonify({
+            #         "success": False,
+            #         "message": "Member ID must be string"
+            #     })
+
             if member_id in members:
                 return jsonify({
                     member_id: members[member_id]
@@ -255,7 +287,7 @@ def buy():
             "success": False,
             "message": "Member ID is required"
         })
-    
+
     if not isinstance(member_id, str):
         return jsonify({
             "success": False,
@@ -280,21 +312,33 @@ def buy():
             "message": "Quantity is required"
         })
 
-    try:
-        product_id = int(product_id)
-    except ValueError:
-        return jsonify({
-            "seccess": False,
-            "message": "Product ID must be integer or \"integer\""
-        })
+    # try:
+    #     product_id = int(product_id)
+    # except ValueError:
+    #     return jsonify({
+    #         "seccess": False,
+    #         "message": "Product ID must be integer or \"integer\""
+    #     })
 
-    try:
-        quantity = int(quantity)
-    except ValueError:
+    if not isinstance(product_id, int):
         return jsonify({
-            "seccess": False,
-            "message": "Quantity must be integer or \"integer\""            
-        })
+            "success": False,
+            "message": "Product ID must be integer"
+        })    
+
+    # try:
+    #     quantity = int(quantity)
+    # except ValueError:
+    #     return jsonify({
+    #         "success": False,
+    #         "message": "Quantity must be integer or \"integer\""
+    #     })
+
+    if not isinstance(quantity, int):
+        return jsonify({
+            "success": False,
+            "message": "Quantity must be integer"
+        })        
 
     if product_id not in goods:
         return jsonify({
@@ -356,12 +400,12 @@ def order():
             "success": False,
             "message": "Member ID is required"
         })
-    
+
     if not isinstance(member_id, str):
         return jsonify({
             "success": False,
             "message": "Member ID must be string"
-        })        
+        })
 
     if member_id not in members:
         return jsonify({
