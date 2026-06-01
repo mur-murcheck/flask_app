@@ -181,15 +181,11 @@ def add_member():
             "message": "Address must be string"
         })
 
-    # matched_key = f"{name}:{phone}"
-    for existing_member_id, data in members.items():
-        # cur_member = f"{data.get('name')}:{data.get('phone')}"
+    for existing_member_id, member in members.items():
 
-        member = members[existing_member_id]
-        if member["name"] == name:
-        # if matched_key == cur_member:
+        if member["name"] == name and member["phone"] == phone:
             return jsonify({
-                "success": False,
+                "success": True,
                 "member_id": existing_member_id,
                 "message": "Member already exists"
             })
@@ -242,12 +238,6 @@ def show_members():
             })
 
         if name:
-            # if not isinstance(name, str):
-            #     return jsonify({
-            #         "success": False,
-            #         "message": "Name must be string"
-            #     })
-
             result = {}
             for member_id in members:
                 member = members[member_id]
@@ -258,12 +248,6 @@ def show_members():
             return jsonify(result)
 
         if member_id:
-            # if not isinstance(member_id, str):
-            #     return jsonify({
-            #         "success": False,
-            #         "message": "Member ID must be string"
-            #     })
-
             if member_id in members:
                 return jsonify({
                     member_id: members[member_id]
@@ -312,27 +296,11 @@ def buy():
             "message": "Quantity is required"
         })
 
-    # try:
-    #     product_id = int(product_id)
-    # except ValueError:
-    #     return jsonify({
-    #         "seccess": False,
-    #         "message": "Product ID must be integer or \"integer\""
-    #     })
-
     if not isinstance(product_id, int):
         return jsonify({
             "success": False,
             "message": "Product ID must be integer"
         })    
-
-    # try:
-    #     quantity = int(quantity)
-    # except ValueError:
-    #     return jsonify({
-    #         "success": False,
-    #         "message": "Quantity must be integer or \"integer\""
-    #     })
 
     if not isinstance(quantity, int):
         return jsonify({
