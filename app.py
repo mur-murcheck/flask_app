@@ -364,7 +364,7 @@ def show_cart():
     inputData = request.json
     member_id = inputData.get("member_id")
 
-    if not member_id:
+    if member_id is None:
         return jsonify({
             "success": False,
             "message": "Member ID is required"
