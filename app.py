@@ -392,7 +392,6 @@ def show_cart():
 
     return jsonify({
         "success": True,
-        "member_id": member_id,
         "cart": member_cart,
         "total amount": total_amount,
         "total_categories": total_categories
