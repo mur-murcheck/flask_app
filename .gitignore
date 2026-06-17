@@ -1,2 +1,8 @@
 .venv/
 .DS_Store
+.env
+__pycache__/
+*/__pycache__/
+logfile/logs/api.log.*
+logs/api.log.*
+logs/api.log
