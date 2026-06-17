@@ -2,6 +2,8 @@
 
 v2 在 v1 的基礎上重構為 **Flask Blueprint + MVC** 架構，並將資料持久化至 **MySQL**（PyMySQL）。所有 API 前綴為 `/api/v2`，且僅使用 **GET** 與 **POST** 兩種 HTTP 方法。
 
+**Dead line:** 6/29(一)，有問題請及早提出！
+
 ---
 
 ## Project structure
